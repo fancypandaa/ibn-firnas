@@ -58,29 +58,15 @@ public class SalaryServiceImpl implements SalaryService{
         if (!optionalSalary.isPresent()) {
             throw new CustomException("Salary Not found");
         }
-        Salary salary = optionalSalary.get();
-        if(salaryDTO.degree()!=null && !salaryDTO.degree().equals(salary.getDegree())){
-            salary.setDegree(salaryDTO.degree());
-        }
-        if(salaryDTO.basic() != null &&salaryDTO.basic()!= salary.getBasic()){
-            salary.setBasic(salaryDTO.basic());
-        }
-        if(salaryDTO.availability()!=null && salaryDTO.availability()!= salary.isAvailability()){
-            salary.setAvailability(salaryDTO.availability());
-        }
-        if(salaryDTO.penalties()!=null){
-            BigDecimal newPenalties=salary.getPenalties().add(salaryDTO.penalties());
-            if((newPenalties.longValue()) >=0){
-                salary.setPenalties(newPenalties);
-            }
-        }
-        if(salaryDTO.bonus()!=null){
-            BigDecimal newBonus=salary.getBonus().add(salaryDTO.bonus());
-            if((newBonus.longValue()) >=0) {
-                salary.setBonus(newBonus);
-            }
-        }
+        Salary existSalary = optionalSalary.get();
+        Salary newSalary=salaryMapper.salaryDTOtoSalary(salaryDTO);
+
+        newSalary.setSalaryId(existSalary.getSalaryId());
+        BigDecimal newPenalties=existSalary.getPenalties().add(newSalary.getPenalties());
+        newSalary.setPenalties(newPenalties);
+        BigDecimal newBonus=existSalary.getBonus().add(newSalary.getBonus());
+        newSalary.setBonus(newBonus);
         return salaryMapper.
-                salarytoSalaryDTO(salaryRepository.save(salary));
+                salarytoSalaryDTO(salaryRepository.save(newSalary));
     }
 }
