@@ -26,7 +26,7 @@ public class Location {
     @Column(nullable = false)
     private String lng;
     @Column(nullable = false)
-    private boolean isActive=false;
+    private Boolean isActive=false;
     @ManyToOne
     @JoinColumn(name = "userId")
     private UserDetails userDetails;
