@@ -58,8 +58,6 @@ class SalaryServiceImplTest {
         assertNotNull(salary);
         assertEquals(salary.isAvailability(),savedSalary.isAvailability());
         assertEquals(salary.getDegree(),savedSalary.getDegree());
-
-
     }
 
     @Test
