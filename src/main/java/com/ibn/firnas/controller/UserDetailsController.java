@@ -40,7 +40,7 @@ public class UserDetailsController {
             return new ResponseEntity<>(exception.getMessage(),HttpStatus.NOT_FOUND);
         }
     }
-    @PatchMapping("/{userId}")
+    @PutMapping("/{userId}")
     public ResponseEntity<? super UserDetailsDTO> updateUserDetails(@PathVariable Long userId, @RequestBody UserDetailsDTO userDetails){
         try {
             UserDetailsDTO updatedUserDetails = userDetailsService.updateUserDetails(userId,userDetails);
