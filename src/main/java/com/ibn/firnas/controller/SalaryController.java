@@ -40,7 +40,7 @@ public class SalaryController {
             return new ResponseEntity<>(exception.getMessage(),HttpStatus.NOT_FOUND);
         }
     }
-    @PatchMapping("/{salaryId}")
+    @PutMapping("/{salaryId}")
     public ResponseEntity<? super SalaryDTO> updateUserSalary(@PathVariable Long salaryId, @RequestBody SalaryDTO salaryDTO){
         try {
             SalaryDTO updatedSalary = salaryService.updateUserSalary(salaryId,salaryDTO);
