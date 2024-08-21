@@ -9,7 +9,6 @@ import java.util.List;
 public interface LocationService {
     LocationDTO findLocationById(Long locationId) throws CustomException;
     List<LocationDTO> findAllLocationsByUserId(Long userId) throws CustomException;
-
-    LocationDTO createNewLocationForUser(LocationDTO locationDTO) throws CustomException;
+    LocationDTO createNewLocationForUser(Long userId,LocationDTO locationDTO) throws CustomException;
     LocationDTO updateLocationDetails(Long locationId,LocationDTO locationDTO) throws CustomException;
 }

@@ -45,12 +45,8 @@ public class LocationServiceImpl implements LocationService{
         return locationDTOS;
     }
     @Override
-    public LocationDTO createNewLocationForUser(LocationDTO locationDTO) throws CustomException {
-        if(Stream.of(locationDTO.userId(),locationDTO.ipAddress(),locationDTO.country()
-        ,locationDTO.lat(),locationDTO.lng()).allMatch(Objects::isNull)){
-            throw new CustomException("Make Sure all Location Elements not null");
-        }
-        Optional<UserDetails> userDetails = userDetailsRepository.findById(locationDTO.userId());
+    public LocationDTO createNewLocationForUser(Long userId,LocationDTO locationDTO) throws CustomException {
+        Optional<UserDetails> userDetails = userDetailsRepository.findById(userId);
         if(!userDetails.isPresent()){
             throw new CustomException("User Not found");
         }
@@ -63,10 +59,6 @@ public class LocationServiceImpl implements LocationService{
     public LocationDTO updateLocationDetails(Long locationId, LocationDTO locationDTO) throws CustomException {
         if(!locationRepository.existsById(locationId)){
             throw new CustomException("Custom Not Found", HttpStatus.NOT_FOUND);
-        }
-        if(locationDTO == null || Stream.of(locationDTO.ipAddress(),locationDTO.country()
-                ,locationDTO.lat(),locationDTO.lng()).allMatch(Objects::isNull)){
-            throw new CustomException("Make Sure all Location Elements not null");
         }
         Location location = locationMapper.locationDTOtoLocation(locationDTO);
         location.setLocationId(locationId);
