@@ -1,17 +1,18 @@
-package com.ibn.firnas.service;
+package com.ibn.firnas.service.impl;
 
 import com.ibn.firnas.domain.AirPlane;
 import com.ibn.firnas.dto.airCrew.AirPlaneDTO;
 import com.ibn.firnas.dto.mapper.AirPlaneMapper;
 import com.ibn.firnas.exception.CustomException;
 import com.ibn.firnas.repostiories.AirPlaneRepository;
+import com.ibn.firnas.service.AirPlaneService;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.stream.*;
 import java.util.Optional;
 @Service
-public class AirPlaneServiceImpl implements AirPlaneService{
+public class AirPlaneServiceImpl implements AirPlaneService {
     private final AirPlaneRepository airPlaneRepository;
     private final AirPlaneMapper airPlaneMapper;
 
