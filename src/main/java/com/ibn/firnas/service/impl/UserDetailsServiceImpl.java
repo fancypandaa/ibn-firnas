@@ -1,4 +1,4 @@
-package com.ibn.firnas.service;
+package com.ibn.firnas.service.impl;
 
 
 import com.ibn.firnas.domain.User;
@@ -8,10 +8,10 @@ import com.ibn.firnas.dto.mapper.UserDetailsMapper;
 import com.ibn.firnas.exception.CustomException;
 import com.ibn.firnas.repostiories.UserDetailsRepository;
 import com.ibn.firnas.repostiories.UserRepository;
+import com.ibn.firnas.service.UserDetailsService;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
