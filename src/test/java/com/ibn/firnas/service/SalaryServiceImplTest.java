@@ -1,13 +1,13 @@
 package com.ibn.firnas.service;
 
 import com.ibn.firnas.domain.Salary;
-import com.ibn.firnas.domain.User;
 import com.ibn.firnas.domain.UserDetails;
 import com.ibn.firnas.dto.airCrew.SalaryDTO;
 import com.ibn.firnas.dto.mapper.SalaryMapper;
 import com.ibn.firnas.exception.CustomException;
 import com.ibn.firnas.repostiories.SalaryRepository;
 import com.ibn.firnas.repostiories.UserDetailsRepository;
+import com.ibn.firnas.service.impl.SalaryServiceImpl;
 import com.ibn.firnas.utils.enums.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
