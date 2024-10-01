@@ -15,10 +15,12 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long locationId;
     @Column(unique = true,nullable = false)
-    @Pattern(regexp="^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$")
+//    @Pattern(regexp="^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$")
     private String ipAddress;
     @Column(nullable = false)
     private String country;
+    @Column(nullable = false)
+    private String city;
     @Column(nullable = false)
     private String time;
     @Column(nullable = false)
