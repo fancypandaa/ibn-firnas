@@ -4,6 +4,7 @@ import com.ibn.firnas.domain.User;
 import com.ibn.firnas.domain.UserDetails;
 import com.ibn.firnas.dto.airCrew.UserDetailsDTO;
 import com.ibn.firnas.dto.mapper.UserDetailsMapper;
+import com.ibn.firnas.service.impl.UserDetailsServiceImpl;
 import com.ibn.firnas.utils.enums.Gender;
 import com.ibn.firnas.exception.CustomException;
 import com.ibn.firnas.repostiories.UserDetailsRepository;
