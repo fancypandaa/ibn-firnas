@@ -5,4 +5,5 @@ import com.ibn.firnas.dto.airCrew.UserDTO;
 
 public interface UserService {
     UserDTO createNewUser(UserDTO user);
+
 }
