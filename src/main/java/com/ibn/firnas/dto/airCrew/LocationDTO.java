@@ -10,6 +10,8 @@ public record LocationDTO(Long locationId,
                           String ipAddress,
                           @NotBlank(message = "country cannot be null")
                           String country,
+                          @NotBlank(message = "city cannot be null")
+                          String city,
                           @NotBlank(message = "time cannot be null")
                           String time,
 
@@ -23,7 +25,7 @@ public record LocationDTO(Long locationId,
                           Boolean isActive
 ) {
 
-    public LocationDTO(String ipAddress, String country, String time, String lat, String lng, Boolean isActive) {
-        this(null, ipAddress, country, time, lat, lng, isActive);
+    public LocationDTO(String ipAddress, String country, String city,String time, String lat, String lng, Boolean isActive) {
+        this(null, ipAddress, country, city,time, lat, lng, isActive);
     }
 }
