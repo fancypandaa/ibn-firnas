@@ -2,7 +2,7 @@ spring:
   server:
     max-http-header-size: 20000
   datasource:
-    url: jdbc:mysql://172.27.0.2:3306/flights
+    url: jdbc:mysql://172.27.0.3:3306/flights
     username: root
     password: rootpassword
     driver-class-name: com.mysql.cj.jdbc.Driver
