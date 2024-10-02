@@ -2,7 +2,7 @@ package com.ibn.firnas.controller;
 
 import com.ibn.firnas.dto.googleFlights.AllFlights;
 import com.ibn.firnas.dto.googleFlights.SearchParams;
-import com.ibn.firnas.service.ITAFlightsService;
+import com.ibn.firnas.service.impl.ITAFlightsService;
 import org.hibernate.sql.exec.ExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
