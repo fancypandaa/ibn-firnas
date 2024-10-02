@@ -1,5 +1,6 @@
 package com.ibn.firnas.controller.controllerAdvice;
 
+import com.ibn.firnas.exception.CustomNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,13 @@ public class ErrorHandlingControllerAdvice {
                     add(new ViolationError(violation.getPropertyPath().toString(),violation.getMessage()));
         }
         return error;
+    }
+    @ExceptionHandler(CustomNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    CustomNotFoundException onCustomNotFoundException(CustomNotFoundException e){
+        CustomNotFoundException err= new CustomNotFoundException(e.getMessage());
+        return err;
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
