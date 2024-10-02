@@ -1,4 +1,4 @@
-package com.ibn.firnas.service;
+package com.ibn.firnas.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibn.firnas.dto.googleFlights.AllFlights;
@@ -19,7 +19,7 @@ import java.util.concurrent.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.ibn.firnas.service.ITAFlightsHelper.*;
+import static com.ibn.firnas.service.impl.ITAFlightsHelper.*;
 @Service
 public class ITAFlightsService {
     @Value("${keys.ati_api_key}")
