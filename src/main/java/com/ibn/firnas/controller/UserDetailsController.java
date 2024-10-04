@@ -1,7 +1,7 @@
 package com.ibn.firnas.controller;
 
 import com.ibn.firnas.dto.airCrew.UserDetailsDTO;
-import com.ibn.firnas.exception.CustomException;
+import com.ibn.firnas.exception.CustomNotFoundException;
 import com.ibn.firnas.service.UserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,34 +21,19 @@ public class UserDetailsController {
         this.userDetailsService = userDetailsService;
     }
     @GetMapping("/{userId}")
-    public ResponseEntity<? super UserDetailsDTO> getUserDetails(@PathVariable Long userId){
-        try {
+    public ResponseEntity<?> getUserDetails(@PathVariable Long userId){
             UserDetailsDTO userDetailsDTO=userDetailsService.findUserDetailsById(userId);
             return new ResponseEntity<>(userDetailsDTO,HttpStatus.OK);
-        } catch (CustomException e) {
-            throw new RuntimeException(e);
-        }
     }
     @PostMapping("/{userId}")
-    public ResponseEntity<? super UserDetailsDTO> createNewUserDetails(@PathVariable Long userId, @RequestBody UserDetailsDTO userDetails){
-        try {
+    public ResponseEntity<?> createNewUserDetails(@PathVariable Long userId, @RequestBody UserDetailsDTO userDetails){
             UserDetailsDTO savedUserDetails = userDetailsService.createNewUserDetails(userId,userDetails);
             return new ResponseEntity<>(savedUserDetails, HttpStatus.CREATED);
-        }
-        catch (CustomException exception){
-            logger.error(exception.getStackTrace().toString());
-            return new ResponseEntity<>(exception.getMessage(),HttpStatus.NOT_FOUND);
-        }
+
     }
     @PutMapping("/{userId}")
-    public ResponseEntity<? super UserDetailsDTO> updateUserDetails(@PathVariable Long userId, @RequestBody UserDetailsDTO userDetails){
-        try {
+    public ResponseEntity<?> updateUserDetails(@PathVariable Long userId, @RequestBody UserDetailsDTO userDetails){
             UserDetailsDTO updatedUserDetails = userDetailsService.updateUserDetails(userId,userDetails);
             return new ResponseEntity<>(updatedUserDetails, HttpStatus.OK);
-        }
-        catch (CustomException exception){
-            logger.error(exception.getStackTrace().toString());
-            return new ResponseEntity<>(exception.getMessage(),HttpStatus.NOT_FOUND);
-        }
     }
 }
