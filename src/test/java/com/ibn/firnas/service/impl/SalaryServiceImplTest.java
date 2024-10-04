@@ -1,12 +1,13 @@
-package com.ibn.firnas.service;
+package com.ibn.firnas.service.impl;
 
 import com.ibn.firnas.domain.Salary;
 import com.ibn.firnas.domain.UserDetails;
 import com.ibn.firnas.dto.airCrew.SalaryDTO;
 import com.ibn.firnas.dto.mapper.SalaryMapper;
-import com.ibn.firnas.exception.CustomException;
+import com.ibn.firnas.exception.CustomNotFoundException;
 import com.ibn.firnas.repostiories.SalaryRepository;
 import com.ibn.firnas.repostiories.UserDetailsRepository;
+import com.ibn.firnas.service.SalaryService;
 import com.ibn.firnas.service.impl.SalaryServiceImpl;
 import com.ibn.firnas.utils.enums.Gender;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +39,7 @@ class SalaryServiceImplTest {
     }
 
     @Test
-    void findSalaryById() throws CustomException {
+    void findSalaryById() {
         Salary salary=newSalary();
         when(salaryRepository.findById(anyLong())).thenReturn(Optional.of(salary));
         SalaryDTO salaryDTO= salaryService.findSalaryById(anyLong());
@@ -48,7 +49,7 @@ class SalaryServiceImplTest {
     }
 
     @Test
-    void addNewUserSalary() throws CustomException {
+    void addNewUserSalary() {
         Salary salary=newSalary();
         when(userDetailsRepository.findById(anyLong())).thenReturn(Optional.of(newUserDetails()));
         when(salaryRepository.save(any(Salary.class))).thenReturn(salary);
@@ -61,7 +62,7 @@ class SalaryServiceImplTest {
     }
 
     @Test
-    void updateUserSalary() throws CustomException {
+    void updateUserSalary() {
         Salary salary=newSalary();
         when(salaryRepository.findById(anyLong())).thenReturn(Optional.of(newSalary()));
         salary.setBonus(BigDecimal.valueOf(5000));
