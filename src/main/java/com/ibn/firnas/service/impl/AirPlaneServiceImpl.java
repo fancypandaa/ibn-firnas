@@ -1,57 +1,66 @@
 package com.ibn.firnas.service.impl;
 
 import com.ibn.firnas.domain.AirPlane;
+import com.ibn.firnas.domain.Flight;
 import com.ibn.firnas.dto.airCrew.AirPlaneDTO;
 import com.ibn.firnas.dto.mapper.AirPlaneMapper;
-import com.ibn.firnas.exception.CustomException;
+import com.ibn.firnas.exception.CustomNotFoundException;
 import com.ibn.firnas.repostiories.AirPlaneRepository;
+import com.ibn.firnas.repostiories.FlightRepository;
 import com.ibn.firnas.service.AirPlaneService;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
-import java.util.stream.*;
 import java.util.Optional;
 @Service
 public class AirPlaneServiceImpl implements AirPlaneService {
     private final AirPlaneRepository airPlaneRepository;
+    private final FlightRepository flightRepository;
     private final AirPlaneMapper airPlaneMapper;
 
-    public AirPlaneServiceImpl(AirPlaneRepository airPlaneRepository, AirPlaneMapper airPlaneMapper) {
+    public AirPlaneServiceImpl(AirPlaneRepository airPlaneRepository, FlightRepository flightRepository, AirPlaneMapper airPlaneMapper) {
         this.airPlaneRepository = airPlaneRepository;
+        this.flightRepository = flightRepository;
         this.airPlaneMapper = airPlaneMapper;
     }
 
     @Override
-    public AirPlaneDTO findAirPlaneById(Long airPlaneId) throws CustomException {
+    public AirPlaneDTO findAirPlaneById(Long airPlaneId) {
         Optional<AirPlane> optionalAirPlane= airPlaneRepository.findById(airPlaneId);
         if(!optionalAirPlane.isPresent()){
-            throw new CustomException("Airplane Not Found"+airPlaneId);
+            throw new CustomNotFoundException("Airplane Not Found"+airPlaneId);
         }
         return airPlaneMapper.airPlaneToAirPlaneDTO(optionalAirPlane.get());
     }
 
     @Override
-    public AirPlaneDTO addNewAirPlane(AirPlaneDTO airPlaneDTO) throws CustomException{
-        if(Stream.of(airPlaneDTO.airline(),airPlaneDTO.planeName(),airPlaneDTO.companyName()).allMatch(Objects::isNull)){
-            throw new CustomException("These Values Shouldn't be null > [airline, planeName and companyName]");
-        }
+    public AirPlaneDTO addNewAirPlane(AirPlaneDTO airPlaneDTO) {
         AirPlane airPlane= airPlaneRepository.save(airPlaneMapper.airPlaneDTOtoAirPlane(airPlaneDTO));
         return airPlaneMapper.airPlaneToAirPlaneDTO(airPlane);
     }
 
     @Override
-    public AirPlaneDTO updateAirPlaneInfo(Long airPlaneId,AirPlaneDTO airPlaneDTO) throws CustomException {
+    public AirPlaneDTO updateAirPlaneInfo(Long airPlaneId,AirPlaneDTO airPlaneDTO) {
         Optional<AirPlane> optionalAirPlane=airPlaneRepository.findById(airPlaneId);
         if(!optionalAirPlane.isPresent()){
-            throw new CustomException("AirPlane with "+airPlaneId +" Not found");
+            throw new CustomNotFoundException("AirPlane with "+airPlaneId +" Not found");
         }
         AirPlane airPlane=optionalAirPlane.get();
-       return airPlaneMapper.airPlaneToAirPlaneDTO(airPlaneRepository.save(airPlane));
+        airPlaneMapper.updateAirPlaneFromDTO(airPlaneDTO,airPlane);
+        return airPlaneMapper.airPlaneToAirPlaneDTO(airPlaneRepository.save(airPlane));
     }
 
     @Override
-    public AirPlaneDTO assignFlightToAirPlane(Long airPlaneId, Long flightId) throws CustomException {
-        return null;
+    public AirPlane assignFlightToAirPlane(Long airPlaneId, Long flightId){
+        Optional<AirPlane> optionalAirPlane=airPlaneRepository.findById(airPlaneId);
+        if(!optionalAirPlane.isPresent()){
+            throw new CustomNotFoundException("AirPlane with "+airPlaneId +" Not found");
+        }
+        Optional<Flight> optionalFlight=flightRepository.findById(flightId);
+        if(!optionalAirPlane.isPresent()){
+            throw new CustomNotFoundException("Flight with "+flightId +" Not found");
+        }
+        AirPlane airPlane= optionalAirPlane.get();
+        airPlane.addFlights(optionalFlight.get());
+        return airPlaneRepository.save(airPlane);
     }
 
 }
