@@ -16,11 +16,9 @@ public class FlightController {
     private static Logger log = LoggerFactory.getLogger(FlightController.class);
     public static final String FLIGHT_URI="/api/aircrew/flight";
     private final FlightService flightService;
-    private final ErrorMapper errorMapper;
 
-    public FlightController(FlightService flightService, ErrorMapper errorMapper) {
+    public FlightController(FlightService flightService) {
         this.flightService = flightService;
-        this.errorMapper = errorMapper;
     }
     @GetMapping("/{flightId}")
     public ResponseEntity<? super FlightDTO> getFlightById(@PathVariable Long flightId){
