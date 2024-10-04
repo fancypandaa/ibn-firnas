@@ -1,12 +1,11 @@
-package com.ibn.firnas.service;
+package com.ibn.firnas.service.impl;
 
 import com.ibn.firnas.domain.User;
 import com.ibn.firnas.domain.UserDetails;
 import com.ibn.firnas.dto.airCrew.UserDetailsDTO;
 import com.ibn.firnas.dto.mapper.UserDetailsMapper;
-import com.ibn.firnas.service.impl.UserDetailsServiceImpl;
+import com.ibn.firnas.service.UserDetailsService;
 import com.ibn.firnas.utils.enums.Gender;
-import com.ibn.firnas.exception.CustomException;
 import com.ibn.firnas.repostiories.UserDetailsRepository;
 import com.ibn.firnas.repostiories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-class UserDetailsServiceImplTests {
+class UserDetailsServiceImplTest {
     @Mock
     private UserDetailsRepository userDetailsRepository;
     @Mock
@@ -35,7 +34,7 @@ class UserDetailsServiceImplTests {
     }
 
     @Test
-    void findUserDetailsById() throws CustomException {
+    void findUserDetailsById()  {
         UserDetails userDetails= newUserDetails();
         when(userDetailsRepository.findById(anyLong())).thenReturn(Optional.of(userDetails));
         UserDetailsDTO saved=userDetailsService.findUserDetailsById(anyLong());
@@ -65,7 +64,7 @@ class UserDetailsServiceImplTests {
         when(userDetailsRepository.save(userDetails)).thenThrow(new RuntimeException("Make Sure License, Date Of Birth and Total Flight Hours not empty..."));
     }
     @Test
-    void patchUserDetails() throws CustomException {
+    void patchUserDetails()  {
         UserDetails updated = newUserDetails();
         updated.setJobTitle("XXX");
         updated.setLicense("555-555-222");
