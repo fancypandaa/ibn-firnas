@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Pattern;
 
 public record LocationDTO(Long locationId,
                           @NotBlank(message = "Make sure to Set IP Address")
-                          @Pattern(regexp="^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$")
                           String ipAddress,
                           @NotBlank(message = "country cannot be null")
                           String country,
