@@ -15,10 +15,11 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long locationId;
     @Column(unique = true,nullable = false)
-    @Pattern(regexp="^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$")
     private String ipAddress;
     @Column(nullable = false)
     private String country;
+    @Column(nullable = false)
+    private String city;
     @Column(nullable = false)
     private String time;
     @Column(nullable = false)
@@ -26,11 +27,10 @@ public class Location {
     @Column(nullable = false)
     private String lng;
     @Column(nullable = false)
-    private boolean isActive=false;
+    private Boolean isActive=false;
     @ManyToOne
     @JoinColumn(name = "userId")
     private UserDetails userDetails;
-
     @CreationTimestamp
     private Date createdAt;
     @UpdateTimestamp

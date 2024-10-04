@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 public record UserDetailsDTO(Long userId,
                              String firstName,
                              String lastName,
+                             @NotBlank(message = "The jobTitle shouldn't be Empty")
+
                              String jobTitle,
                              @NotBlank(message = "The License shouldn't be Empty")
                              String license,

@@ -89,6 +89,4 @@ class UserDetailsControllerTest {
                 ,"01-31-1990",30L);
         return userDetails;
     }
-
-
 }

@@ -1,12 +1,13 @@
-package com.ibn.firnas.service;
+package com.ibn.firnas.service.impl;
 
 import com.ibn.firnas.domain.Salary;
 import com.ibn.firnas.domain.UserDetails;
 import com.ibn.firnas.dto.airCrew.SalaryDTO;
 import com.ibn.firnas.dto.mapper.SalaryMapper;
-import com.ibn.firnas.exception.CustomException;
+import com.ibn.firnas.exception.CustomNotFoundException;
 import com.ibn.firnas.repostiories.SalaryRepository;
 import com.ibn.firnas.repostiories.UserDetailsRepository;
+import com.ibn.firnas.service.SalaryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
-public class SalaryServiceImpl implements SalaryService{
+public class SalaryServiceImpl implements SalaryService {
     private final static Logger logger = LoggerFactory.getLogger(SalaryServiceImpl.class);
     private final SalaryRepository salaryRepository;
     private final UserDetailsRepository userDetailsRepository;
@@ -29,22 +30,19 @@ public class SalaryServiceImpl implements SalaryService{
     }
 
     @Override
-    public SalaryDTO findSalaryById(Long salaryId) throws CustomException {
+    public SalaryDTO findSalaryById(Long salaryId)  {
         Optional<Salary> optionalSalary = salaryRepository.findById(salaryId);
         if(!optionalSalary.isPresent()){
-            throw new CustomException("No salary found for this id");
+            throw new CustomNotFoundException("No salary found for this id");
         }
         return salaryMapper.salarytoSalaryDTO(optionalSalary.get());
     }
 
     @Override
-    public SalaryDTO addNewUserSalary(Long userId, SalaryDTO salaryDTO) throws CustomException {
+    public SalaryDTO addNewUserSalary(Long userId, SalaryDTO salaryDTO)  {
         Optional<UserDetails> userDetails =userDetailsRepository.findById(userId);
         if(!userDetails.isPresent()){
-            throw new CustomException("User not found");
-        }
-        if(salaryDTO.basic() == null  || salaryDTO.degree().isEmpty()){
-            throw new CustomException("Make Sure Basic, Degree not empty...", HttpStatus.BAD_REQUEST);
+            throw new CustomNotFoundException("User not found");
         }
         Salary salary = salaryRepository.save(salaryMapper.salaryDTOtoSalary(salaryDTO));
         userDetails.get().setSalary(salary);
@@ -53,34 +51,19 @@ public class SalaryServiceImpl implements SalaryService{
     }
 
     @Override
-    public SalaryDTO updateUserSalary(Long salaryId, SalaryDTO salaryDTO) throws CustomException {
+    public SalaryDTO updateUserSalary(Long salaryId, SalaryDTO salaryDTO) {
         Optional<Salary> optionalSalary = salaryRepository.findById(salaryId);
         if (!optionalSalary.isPresent()) {
-            throw new CustomException("Salary Not found");
+            throw new CustomNotFoundException("Salary Not found");
         }
-        Salary salary = optionalSalary.get();
-        if(salaryDTO.degree()!=null && !salaryDTO.degree().equals(salary.getDegree())){
-            salary.setDegree(salaryDTO.degree());
-        }
-        if(salaryDTO.basic() != null &&salaryDTO.basic()!= salary.getBasic()){
-            salary.setBasic(salaryDTO.basic());
-        }
-        if(salaryDTO.availability()!=null && salaryDTO.availability()!= salary.isAvailability()){
-            salary.setAvailability(salaryDTO.availability());
-        }
-        if(salaryDTO.penalties()!=null){
-            BigDecimal newPenalties=salary.getPenalties().add(salaryDTO.penalties());
-            if((newPenalties.longValue()) >=0){
-                salary.setPenalties(newPenalties);
-            }
-        }
-        if(salaryDTO.bonus()!=null){
-            BigDecimal newBonus=salary.getBonus().add(salaryDTO.bonus());
-            if((newBonus.longValue()) >=0) {
-                salary.setBonus(newBonus);
-            }
-        }
+        Salary existSalary = optionalSalary.get();
+        Salary newSalary=salaryMapper.salaryDTOtoSalary(salaryDTO);
+        newSalary.setSalaryId(existSalary.getSalaryId());
+        BigDecimal newPenalties=existSalary.getPenalties().add(newSalary.getPenalties());
+        newSalary.setPenalties(newPenalties);
+        BigDecimal newBonus=existSalary.getBonus().add(newSalary.getBonus());
+        newSalary.setBonus(newBonus);
         return salaryMapper.
-                salarytoSalaryDTO(salaryRepository.save(salary));
+                salarytoSalaryDTO(salaryRepository.save(newSalary));
     }
 }

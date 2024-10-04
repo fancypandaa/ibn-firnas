@@ -18,7 +18,7 @@ public class AirPlane {
     @Column(nullable = false)
     private String planeName;
     @Column(nullable = false)
-    private Integer airline;
+    private String airline;
     private String airlineLogo;
     private String model;
     private Integer totalFlightHours;
@@ -27,8 +27,13 @@ public class AirPlane {
     private Integer numberOfSeats;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airPlane", cascade = CascadeType.ALL)
     private Set<Flight> flights=new LinkedHashSet<>();
+    public void addFlights(Flight flight){
+        this.flights.add(flight);
+        flight.setAirPlane(this);
+    }
     @CreationTimestamp
     private Date createdAt;
     @UpdateTimestamp
     private Date updateAt;
+
 }

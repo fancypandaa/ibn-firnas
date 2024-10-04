@@ -1,10 +1,10 @@
-package com.ibn.firnas.service;
+package com.ibn.firnas.service.impl;
 
 import com.ibn.firnas.domain.User;
-import com.ibn.firnas.domain.UserDetails;
 import com.ibn.firnas.dto.airCrew.UserDTO;
 import com.ibn.firnas.dto.mapper.UserMapper;
 import com.ibn.firnas.repostiories.UserRepository;
+import com.ibn.firnas.service.UserService;
 import org.springframework.stereotype.Service;
 
 @Service

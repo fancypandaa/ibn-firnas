@@ -1,4 +1,4 @@
-package com.ibn.firnas.service;
+package com.ibn.firnas.service.impl;
 
 import com.ibn.firnas.dto.googleFlights.SearchParams;
 import org.springframework.web.util.UriComponentsBuilder;

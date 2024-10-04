@@ -1,17 +1,17 @@
-package com.ibn.firnas.service;
+package com.ibn.firnas.service.impl;
 
 
 import com.ibn.firnas.domain.User;
 import com.ibn.firnas.domain.UserDetails;
 import com.ibn.firnas.dto.airCrew.UserDetailsDTO;
 import com.ibn.firnas.dto.mapper.UserDetailsMapper;
-import com.ibn.firnas.exception.CustomException;
+import com.ibn.firnas.exception.CustomNotFoundException;
 import com.ibn.firnas.repostiories.UserDetailsRepository;
 import com.ibn.firnas.repostiories.UserRepository;
+import com.ibn.firnas.service.UserDetailsService;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,19 +30,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetailsDTO findUserDetailsById(Long userId) throws CustomException {
+    public UserDetailsDTO findUserDetailsById(Long userId) {
         Optional<UserDetails> optionalUserDetails= userDetailsRepository.findById(userId);
         if(!optionalUserDetails.isPresent()){
-            throw  new CustomException("User Not Found");
+            throw  new CustomNotFoundException("User Not Found");
         }
         return userDetailsMapper.userDetailsToUserDetailsDTO(optionalUserDetails.get());
     }
 
     @Override
-    public UserDetailsDTO createNewUserDetails(Long userId,UserDetailsDTO userDetailsDTO) throws CustomException,ConstraintViolationException{
+    public UserDetailsDTO createNewUserDetails(Long userId,UserDetailsDTO userDetailsDTO){
         Optional<User> optionalUser= userRepository.findById(userId);
         if(!optionalUser.isPresent()){
-            throw new CustomException("User Not found");
+            throw new CustomNotFoundException("User Not found");
         }
         UserDetails newUserDetails= userDetailsMapper.userDetailsDTOtoUserDetails(userDetailsDTO);
         newUserDetails.setUser(optionalUser.get());
@@ -51,10 +51,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetailsDTO updateUserDetails(Long userId, UserDetailsDTO userDetailsDTO) throws CustomException {
+    public UserDetailsDTO updateUserDetails(Long userId, UserDetailsDTO userDetailsDTO)  {
         Optional<UserDetails> optionalUser= userDetailsRepository.findById(userId);
         if(!optionalUser.isPresent()){
-            throw new CustomException("User Not found");
+            throw new CustomNotFoundException("User Not found");
         }
         UserDetails currentUserDetails = optionalUser.get();
         currentUserDetails.setTotalFlightsHours(userDetailsDTO.totalFlightsHours());
