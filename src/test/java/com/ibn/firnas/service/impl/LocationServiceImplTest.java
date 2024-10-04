@@ -1,12 +1,12 @@
-package com.ibn.firnas.service;
+package com.ibn.firnas.service.impl;
 
 import com.ibn.firnas.domain.Location;
 import com.ibn.firnas.domain.UserDetails;
-import com.ibn.firnas.dto.airCrew.LocationDTO;
 import com.ibn.firnas.dto.mapper.LocationMapper;
-import com.ibn.firnas.exception.CustomException;
+import com.ibn.firnas.exception.CustomNotFoundException;
 import com.ibn.firnas.repostiories.LocationRepository;
 import com.ibn.firnas.repostiories.UserDetailsRepository;
+import com.ibn.firnas.service.LocationService;
 import com.ibn.firnas.utils.enums.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ class LocationServiceImplTest {
     }
 
     @Test
-    void findLocationById() throws CustomException {
+    void findLocationById()  {
         Location location=getLocation();
         when(locationRepository.findById(anyLong())).thenReturn(Optional.of(location));
         Location newLoc= locationRepository.findById(anyLong()).get();
@@ -47,7 +47,7 @@ class LocationServiceImplTest {
     }
 
     @Test
-    void findAllLocationsByUserId() throws CustomException {
+    void findAllLocationsByUserId() {
         List<Location> locationList=List.of(getLocation(),getLocationI());
         when(locationRepository.findLocationsByUserDetails_UserIdOrderByCreatedAtDesc(anyLong()))
                 .thenReturn(locationList);
@@ -61,7 +61,7 @@ class LocationServiceImplTest {
     }
 
     @Test
-    void createNewLocationForUser() throws CustomException {
+    void createNewLocationForUser() {
         Location location=getLocation();
         when(userDetailsRepository.findById(anyLong())).thenReturn(Optional.of(newUserDetails()));
         when(locationRepository.save(any(Location.class))).thenReturn(location);
@@ -80,7 +80,6 @@ class LocationServiceImplTest {
         Location location=getLocation();
         when(locationRepository.findById(anyLong())).thenReturn(Optional.of(location));
         Optional<Location> found=locationRepository.findById(anyLong());
-
         found.get().setIpAddress("192.168.0.3");
         found.get().setTime("23:20:00");
         when(locationRepository.save(location)).thenReturn(location);
