@@ -66,7 +66,7 @@ class FlightServiceImplTest {
         verify(flightRepository,times(1)).findById(anyLong());
         verify(flightRepository,times(1)).save(any());
         assertNotNull(updatedFlight);
-        assertNotNull(updatedFlight.getDuration(),existFlight.getDuration());
+        assertNotEquals(updatedFlight.getDuration(),anFlightEntity().getDuration());
         assertEquals(updatedFlight.getFlightNumber(),existFlight.getFlightNumber());
     }
     private static Flight anFlightEntity(){
