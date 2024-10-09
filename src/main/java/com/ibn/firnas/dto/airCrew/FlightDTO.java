@@ -1,16 +1,18 @@
 package com.ibn.firnas.dto.airCrew;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.ibn.firnas.utils.Helper;
 import com.ibn.firnas.utils.enums.TripCategory;
 import com.ibn.firnas.utils.enums.TripType;
 import jakarta.validation.constraints.NotBlank;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public record FlightDTO(
+        @JsonInclude(value = JsonInclude.Include.NON_NULL)
+        Long flightId,
         @NotNull
         TripCategory tripCategory,
         TripType tripType,
@@ -37,5 +39,10 @@ public record FlightDTO(
         Date return_date,
         String flightNumber,
         Date createdAt,
-        Date updatedAt) {
+        Date updatedAt,
+        @JsonInclude(value = JsonInclude.Include.NON_NULL)
+        List<Long> userIds) {
+        public FlightDTO {
+                userIds = Helper.checkNullValues(userIds) ? userIds: new ArrayList<>();
+        }
 }
