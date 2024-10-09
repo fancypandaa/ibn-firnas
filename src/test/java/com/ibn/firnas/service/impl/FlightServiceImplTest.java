@@ -1,8 +1,10 @@
 package com.ibn.firnas.service.impl;
 
 import com.ibn.firnas.domain.Flight;
+import com.ibn.firnas.domain.UserDetails;
 import com.ibn.firnas.dto.mapper.FlightMapper;
 import com.ibn.firnas.repostiories.FlightRepository;
+import com.ibn.firnas.repostiories.UserDetailsRepository;
 import com.ibn.firnas.service.FlightService;
 import com.ibn.firnas.utils.enums.TripCategory;
 import com.ibn.firnas.utils.enums.TripType;
@@ -27,12 +29,14 @@ class FlightServiceImplTest {
     private FlightRepository flightRepository;
     @Mock
     private FlightMapper flightMapper;
+    @Mock
+    private UserDetailsRepository userDetailsRepository;
     private FlightService flightService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        flightService = new FlightServiceImpl(flightRepository,flightMapper);
+        flightService = new FlightServiceImpl(flightRepository, userDetailsRepository, flightMapper);
     }
 
     @Test
