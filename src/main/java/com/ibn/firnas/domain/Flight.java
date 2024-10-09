@@ -51,8 +51,15 @@ public class Flight {
     private AirPlane airPlane;
     @ManyToMany(mappedBy = "flights",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,
     CascadeType.REFRESH})
-    @JsonIgnore
     private Set<UserDetails> userDetails=new HashSet<>();
+    public void addUser(UserDetails user){
+        this.userDetails.add(user);
+        user.getFlights().add(this);
+    }
+    public void removeUser(UserDetails user){
+        this.userDetails.remove(user);
+        user.getFlights().remove(this);
+    }
     @CreationTimestamp
     private Date createdAt;
     @UpdateTimestamp
