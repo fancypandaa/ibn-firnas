@@ -34,12 +34,12 @@ public class UserDetails {
     private User user;
     @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.REFRESH,CascadeType.PERSIST})
     @JoinTable(
-            name = "flights_crew",
+            name = "flights_users",
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "flightId")
     )
     private Set<Flight> flights=new HashSet<>();
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "salary_id",referencedColumnName = "salaryId")
     private Salary salary;
     @CreationTimestamp
