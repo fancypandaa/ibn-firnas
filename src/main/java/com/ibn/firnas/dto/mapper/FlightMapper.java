@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring",uses = FlightMapper.class )
 public interface FlightMapper {
-    @Named(value = "countPatients")
-    static List<Long> countPatients(Set<UserDetails> userDetails) {
+    @Named(value = "extractUserDetailsId")
+    static List<Long> extractUserDetailsId(Set<UserDetails> userDetails) {
         if(userDetails == null) {
             return new ArrayList<>();
         }
@@ -21,9 +21,8 @@ public interface FlightMapper {
     FlightMapper INSTANCE = Mappers.getMapper(FlightMapper.class);
 
     Flight flightDTOtoFlight(FlightDTO flightDTO);
-    @Mapping(source = "userDetails", target = "userIds",qualifiedByName="countPatients")
+    @Mapping(source = "userDetails", target = "userIds",qualifiedByName="extractUserDetailsId")
     FlightDTO flightToFlightDTO(Flight flight);
-    Flight flightAllDTOtoFlight(FlightAllDTO flightAllDTO);
     FlightAllDTO flightToFlightAllDTO(Flight flight);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
