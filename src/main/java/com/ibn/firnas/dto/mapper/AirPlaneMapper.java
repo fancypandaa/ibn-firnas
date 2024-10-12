@@ -1,17 +1,20 @@
 package com.ibn.firnas.dto.mapper;
 
 import com.ibn.firnas.domain.AirPlane;
+import com.ibn.firnas.domain.Flight;
 import com.ibn.firnas.dto.airCrew.AirPlaneDTO;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
-
+import java.util.Set;
 @Mapper(componentModel = "spring")
 public interface AirPlaneMapper {
+    @Named("exportLastFlight")
+    default Long getLastFlight(Set<Flight> flights){
+        return flights.stream().iterator().next().getFlightId();
+    }
     AirPlaneMapper INSTANCE= Mappers.getMapper(AirPlaneMapper.class);
     AirPlane airPlaneDTOtoAirPlane(AirPlaneDTO airPlaneDTO);
+    @Mapping(source = "flights",target = "flightId" , qualifiedByName = "exportLastFlight")
     AirPlaneDTO airPlaneToAirPlaneDTO(AirPlane airPlane);
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateAirPlaneFromDTO(AirPlaneDTO airPlaneDTO, @MappingTarget AirPlane airPlane);
