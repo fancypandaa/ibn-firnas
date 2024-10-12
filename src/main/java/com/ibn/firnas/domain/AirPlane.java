@@ -31,6 +31,10 @@ public class AirPlane {
         this.flights.add(flight);
         flight.setAirPlane(this);
     }
+    public void removeFlights(Flight flight){
+        this.flights.remove(flight);
+        flight.setAirPlane(null);
+    }
     @CreationTimestamp
     private Date createdAt;
     @UpdateTimestamp
