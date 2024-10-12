@@ -1,11 +1,10 @@
 package com.ibn.firnas.dto.airCrew;
 
-
-
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-
+import java.util.*;
 import java.util.Date;
 
 public record AirPlaneDTO(
@@ -25,7 +24,10 @@ public record AirPlaneDTO(
         @Min(3)
         Integer numberOfSeats,
         Date createdAt,
-        Date updateAt) {
+        Date updateAt,
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        Long flightId
+) {
 }
 
 

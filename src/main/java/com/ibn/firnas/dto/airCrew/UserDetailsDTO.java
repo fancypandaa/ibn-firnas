@@ -1,6 +1,9 @@
 package com.ibn.firnas.dto.airCrew;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ibn.firnas.utils.enums.Gender;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,6 +16,7 @@ public record UserDetailsDTO(Long userId,
                              String jobTitle,
                              @NotBlank(message = "The License shouldn't be Empty")
                              String license,
+                             @Enumerated(EnumType.STRING)
                              Gender gender,
                              @NotBlank(message = "The Address shouldn't be empty")
                              String address,
@@ -20,17 +24,12 @@ public record UserDetailsDTO(Long userId,
                              String dateOfBirth,
                              @NotNull(message = "Aircrew Total Flight Hours is mandatory")
                              @Min(1)
-                             Long totalFlightsHours) {
+                             Long totalFlightsHours,
+                             @JsonInclude(value = JsonInclude.Include.NON_NULL)
+                             Long salaryId,
+                             @JsonInclude(value = JsonInclude.Include.NON_NULL)
+                             Long locationId
+                             ) {
 
-    public UserDetailsDTO(Long userId, String firstName, String lastName, String jobTitle, String license, Gender gender, String address, String dateOfBirth, Long totalFlightsHours) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.jobTitle = jobTitle;
-        this.license = license;
-        this.gender = gender;
-        this.address = address;
-        this.dateOfBirth = dateOfBirth;
-        this.totalFlightsHours = totalFlightsHours;
-    }
+
 }

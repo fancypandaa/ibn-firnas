@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ibn.firnas.utils.Helper;
 import com.ibn.firnas.utils.enums.TripCategory;
 import com.ibn.firnas.utils.enums.TripType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +16,9 @@ public record FlightDTO(
         @JsonInclude(value = JsonInclude.Include.NON_NULL)
         Long flightId,
         @NotNull
+        @Enumerated(EnumType.STRING)
         TripCategory tripCategory,
+        @Enumerated(EnumType.STRING)
         TripType tripType,
         Boolean showHidden,
         @NotBlank(message = "departureId cannot be null")
@@ -40,6 +44,8 @@ public record FlightDTO(
         String flightNumber,
         Date createdAt,
         Date updatedAt,
+        @JsonInclude(value = JsonInclude.Include.NON_NULL)
+        Long airPlaneId,
         @JsonInclude(value = JsonInclude.Include.NON_NULL)
         List<Long> userIds) {
         public FlightDTO {
