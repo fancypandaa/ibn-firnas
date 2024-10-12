@@ -14,7 +14,6 @@ public class AirPlaneController {
     private static Logger log = LoggerFactory.getLogger(FlightController.class);
     public static final String AIRPLANE_URI="/api/aircrew/plane";
     private final AirPlaneService airPlaneService;
-
     public AirPlaneController(AirPlaneService airPlaneService) {
         this.airPlaneService = airPlaneService;
     }

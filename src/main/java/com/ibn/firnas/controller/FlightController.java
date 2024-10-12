@@ -50,6 +50,4 @@ public class FlightController {
         FlightDTO updatedFlight= flightService.updateExistsFlight(flightId,flightDTO);
         return new ResponseEntity<>(updatedFlight,HttpStatus.OK);
     }
-
-
 }

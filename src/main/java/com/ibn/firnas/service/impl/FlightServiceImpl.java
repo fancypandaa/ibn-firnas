@@ -97,4 +97,6 @@ public class FlightServiceImpl implements FlightService {
         Flight savedFlight = flightRepository.save(flight);
         return flightMapper.flightToFlightDTO(savedFlight);
     }
+
+
 }

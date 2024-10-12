@@ -28,7 +28,7 @@ public class Location {
     private String lng;
     @Column(nullable = false)
     private Boolean isActive=false;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private UserDetails userDetails;
     @CreationTimestamp

@@ -1,8 +1,8 @@
 package com.ibn.firnas.dto.airCrew;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 
 public record LocationDTO(Long locationId,
                           @NotBlank(message = "Make sure to Set IP Address")
@@ -13,18 +13,12 @@ public record LocationDTO(Long locationId,
                           String city,
                           @NotBlank(message = "time cannot be null")
                           String time,
-
                           @NotBlank(message = "lat cannot be null")
                           String lat,
-
                           @NotBlank(message = "lng cannot be null")
                           String lng,
-
                           @NotBlank(message = "isActive cannot be null")
-                          Boolean isActive
-) {
-
-    public LocationDTO(String ipAddress, String country, String city,String time, String lat, String lng, Boolean isActive) {
-        this(null, ipAddress, country, city,time, lat, lng, isActive);
-    }
-}
+                          Boolean isActive,
+                          @JsonInclude(value = JsonInclude.Include.NON_NULL)
+                          Long userId
+) {}

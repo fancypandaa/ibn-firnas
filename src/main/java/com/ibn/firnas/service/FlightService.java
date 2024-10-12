@@ -10,5 +10,4 @@ public interface FlightService {
     FlightDTO createNewFlightWithCrew(FlightDTO  flightAllDTO);
     FlightDTO updateExistsFlight(Long flightId, FlightDTO flightDTO);
     FlightDTO assignFlightCrew(Long flightId, List<Long> userIds);
-
 }

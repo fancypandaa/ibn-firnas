@@ -1,7 +1,6 @@
 package com.ibn.firnas.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ibn.firnas.utils.enums.TripCategory;
 import com.ibn.firnas.utils.enums.TripType;
 import jakarta.persistence.*;
@@ -18,8 +17,10 @@ public class Flight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long flightId;
     @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private TripCategory tripCategory;
     @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private TripType tripType;
     private Boolean showHidden;
     @Column(nullable = false)
@@ -49,7 +50,7 @@ public class Flight {
     @ManyToOne
     @JoinColumn(name = "airplaneId")
     private AirPlane airPlane;
-    @ManyToMany(mappedBy = "flights",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,
+    @ManyToMany(mappedBy = "flights",cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,
     CascadeType.REFRESH})
     private Set<UserDetails> userDetails=new HashSet<>();
     public void addUser(UserDetails user){
@@ -64,5 +65,4 @@ public class Flight {
     private Date createdAt;
     @UpdateTimestamp
     private Date updatedAt;
-
 }

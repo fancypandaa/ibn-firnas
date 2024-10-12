@@ -35,6 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(!optionalUserDetails.isPresent()){
             throw  new CustomNotFoundException("User Not Found");
         }
+        logger.info(optionalUserDetails.get().toString());
         return userDetailsMapper.userDetailsToUserDetailsDTO(optionalUserDetails.get());
     }
 

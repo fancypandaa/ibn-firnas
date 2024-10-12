@@ -20,13 +20,15 @@ public class UserDetails {
     @Column(nullable = false)
     private String license;
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Gender gender;
     private String address;
     @Column(nullable = false)
     private String dateOfBirth;
     @Column(nullable = false)
     private Long totalFlightsHours;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userDetails", cascade = CascadeType.ALL)
+    @OneToMany( mappedBy = "userDetails", cascade = CascadeType.ALL)
+    @OrderBy(value = "created_at DESC")
     private Set<Location> locations=new LinkedHashSet<>();
     @OneToOne
     @MapsId
@@ -39,12 +41,13 @@ public class UserDetails {
             inverseJoinColumns = @JoinColumn(name = "flightId")
     )
     private Set<Flight> flights=new HashSet<>();
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "salary_id",referencedColumnName = "salaryId")
     private Salary salary;
     @CreationTimestamp
     private Date createdAt;
     @UpdateTimestamp
     private Date updatedAt;
+
 
 }
