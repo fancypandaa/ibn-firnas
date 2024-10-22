@@ -2,8 +2,8 @@ package com.ibn.firnas.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibn.firnas.dto.airCrew.UserDetailsDTO;
-import com.ibn.firnas.utils.enums.Gender;
 import com.ibn.firnas.service.UserDetailsService;
+import com.ibn.firnas.utils.enums.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -12,19 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import lombok.val;
 @SpringBootTest
 class UserDetailsControllerTest {
+    private static final String JOB_TITLE= "XXX";
+    private static final long userId= 2L;
     @Mock
     private UserDetailsService userDetailsService;
     private MockMvc mockMvc;
@@ -46,7 +47,7 @@ class UserDetailsControllerTest {
         mockMvc.perform(get("/api/aircrew/userDetails/2"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.userId").value(2))
-                .andExpect(jsonPath("jobTitle").value("Pilot"))
+                .andExpect(jsonPath("jobTitle").value(JOB_TITLE))
                 .andExpect(jsonPath("totalFlightsHours").isNumber())
                 .andDo(print());
     }
@@ -64,29 +65,43 @@ class UserDetailsControllerTest {
 
     @Test
     void updateUserDetails() throws Exception {
-        Long userId=2L;
-        when(userDetailsService.updateUserDetails(2L,userDetails())).thenReturn(updatedUserDetails());
-        MvcResult result2 =mockMvc.perform(patch("/api/aircrew/userDetails/{userId}",userId)
+        when(userDetailsService.updateUserDetails(anyLong(),any(UserDetailsDTO.class))).thenReturn(updatedUserDetails());
+        mockMvc.perform(put("/api/aircrew/userDetails/{userId}",userId)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(objectMapper.writeValueAsString(updatedUserDetails()))
                 )
         .andExpect(status().isOk()).andReturn();
-
-        verify(userDetailsService).updateUserDetails(userId,updatedUserDetails());
-
+        verify(userDetailsService,times(1))
+                .updateUserDetails(userId,updatedUserDetails());
         assertEquals(updatedUserDetails().userId(),userId);
 
     }
-    private static UserDetailsDTO userDetails(){
-        UserDetailsDTO userDetails = new UserDetailsDTO(2L,
-                "abc","def","Pilot","bbb-334-gdgd", Gender.FEMALE,"aa-bb-cc"
-        ,"01-31-1990",14L);
-        return userDetails;
+    public static UserDetailsDTO userDetails(){
+        val userDetailsDTO = UserDetailsDTO.builder()
+                .userId(userId)
+                .firstName("ABC")
+                .lastName("DEF")
+                .address("bbb-334-vvc")
+                .jobTitle("XXX")
+                .dateOfBirth("01-31-1990")
+                .gender(Gender.MALE)
+                .totalFlightsHours(30L)
+                .license("aa-bb-cc")
+                .build();
+        return userDetailsDTO;
     }
-    private static UserDetailsDTO updatedUserDetails(){
-        UserDetailsDTO userDetails = new UserDetailsDTO(2L,
-                "abc","def","PilotI","bbb-334-XXX",Gender.FEMALE,"aa-bb-cc"
-                ,"01-31-1990",30L);
-        return userDetails;
+    public static UserDetailsDTO updatedUserDetails(){
+        val userDetailsDTO = UserDetailsDTO.builder()
+                .userId(userId)
+                .firstName("TRT")
+                .lastName("DCD")
+                .address("ccc-334-vvc")
+                .jobTitle("XXX")
+                .dateOfBirth("01-31-1997")
+                .gender(Gender.FEMALE)
+                .totalFlightsHours(34L)
+                .license("vv-dd-ff")
+                .build();
+        return userDetailsDTO;
     }
 }

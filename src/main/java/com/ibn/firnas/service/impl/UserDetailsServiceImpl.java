@@ -57,13 +57,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(!optionalUser.isPresent()){
             throw new CustomNotFoundException("User Not found");
         }
-        UserDetails currentUserDetails = optionalUser.get();
-        currentUserDetails.setTotalFlightsHours(userDetailsDTO.totalFlightsHours());
-        currentUserDetails.setLicense(userDetailsDTO.license());
-        currentUserDetails.setAddress(userDetailsDTO.address());
-        currentUserDetails.setJobTitle(userDetailsDTO.jobTitle());
-
+        UserDetails updatedUserDetails = userDetailsMapper.userDetailsDTOtoUserDetails(userDetailsDTO);
+        updatedUserDetails.setUserId(optionalUser.get().getUserId());
         return userDetailsMapper.
-                userDetailsToUserDetailsDTO(userDetailsRepository.save(currentUserDetails));
+                userDetailsToUserDetailsDTO(userDetailsRepository.save(updatedUserDetails));
     }
 }
