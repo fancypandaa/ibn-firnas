@@ -3,7 +3,9 @@ package com.ibn.firnas.dto.airCrew;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
 
+@Builder
 public record LocationDTO(Long locationId,
                           @NotBlank(message = "Make sure to Set IP Address")
                           String ipAddress,

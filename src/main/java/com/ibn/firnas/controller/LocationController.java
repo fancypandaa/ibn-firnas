@@ -27,7 +27,7 @@ public class LocationController {
     @PostMapping("/{userId}")
     public ResponseEntity<? super LocationDTO> createNewLocation(@PathVariable Long userId,@RequestBody LocationDTO locationDTO){
         LocationDTO savedLocationDTO=locationService.createNewLocationForUser(userId,locationDTO);
-        return new ResponseEntity<>(savedLocationDTO, HttpStatus.OK);
+        return new ResponseEntity<>(savedLocationDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/{locationId}")
