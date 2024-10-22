@@ -82,10 +82,5 @@ class AirPlaneServiceImplTest {
         airPlane.setTotalFlightHours(55);
         return airPlane;
     }
-    private static AirPlaneDTO airPlaneDTO(){
-        AirPlaneDTO airPlaneDTO = new AirPlaneDTO(1L,"DDD","XCCV","FFF",
-                "VV",null,1212,50,(new Date()),55,null
-        ,null);
-        return airPlaneDTO;
-    }
+
 }

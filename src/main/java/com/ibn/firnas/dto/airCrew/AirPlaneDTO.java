@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import java.util.*;
-import java.util.Date;
+import lombok.Builder;
 
+import java.util.Date;
+@Builder
 public record AirPlaneDTO(
         Long planeId,
         @NotBlank(message = "companyName cannot be null")
