@@ -18,10 +18,10 @@ public class Salary {
     @Column(nullable = false)
     private String degree;
     @Column(nullable = false)
-    private BigDecimal basic;
-    private BigDecimal bonus;
-    private BigDecimal penalties;
-    private boolean availability;
+    private Double basic;
+    private Double bonus;
+    private Double penalties;
+    private Boolean availability;
     @CreationTimestamp
     private Date createdAt;
     @UpdateTimestamp

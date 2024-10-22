@@ -59,10 +59,8 @@ public class SalaryServiceImpl implements SalaryService {
         Salary existSalary = optionalSalary.get();
         Salary newSalary=salaryMapper.salaryDTOtoSalary(salaryDTO);
         newSalary.setSalaryId(existSalary.getSalaryId());
-        BigDecimal newPenalties=existSalary.getPenalties().add(newSalary.getPenalties());
-        newSalary.setPenalties(newPenalties);
-        BigDecimal newBonus=existSalary.getBonus().add(newSalary.getBonus());
-        newSalary.setBonus(newBonus);
+        newSalary.setPenalties(existSalary.getPenalties()+newSalary.getPenalties());
+        newSalary.setBonus(existSalary.getBonus()+newSalary.getBonus());
         return salaryMapper.
                 salarytoSalaryDTO(salaryRepository.save(newSalary));
     }

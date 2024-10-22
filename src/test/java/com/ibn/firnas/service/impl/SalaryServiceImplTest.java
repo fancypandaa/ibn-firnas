@@ -4,18 +4,15 @@ import com.ibn.firnas.domain.Salary;
 import com.ibn.firnas.domain.UserDetails;
 import com.ibn.firnas.dto.airCrew.SalaryDTO;
 import com.ibn.firnas.dto.mapper.SalaryMapper;
-import com.ibn.firnas.exception.CustomNotFoundException;
 import com.ibn.firnas.repostiories.SalaryRepository;
 import com.ibn.firnas.repostiories.UserDetailsRepository;
 import com.ibn.firnas.service.SalaryService;
-import com.ibn.firnas.service.impl.SalaryServiceImpl;
 import com.ibn.firnas.utils.enums.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Optional;
 
@@ -57,7 +54,7 @@ class SalaryServiceImplTest {
         verify(salaryRepository,times(1)).save(salary);
         assertNotNull(newUserDetails());
         assertNotNull(salary);
-        assertEquals(salary.isAvailability(),savedSalary.isAvailability());
+        assertEquals(salary.getAvailability(),savedSalary.getAvailability());
         assertEquals(salary.getDegree(),savedSalary.getDegree());
     }
 
@@ -65,8 +62,8 @@ class SalaryServiceImplTest {
     void updateUserSalary() {
         Salary salary=newSalary();
         when(salaryRepository.findById(anyLong())).thenReturn(Optional.of(newSalary()));
-        salary.setBonus(BigDecimal.valueOf(5000));
-        salary.setBasic(BigDecimal.valueOf(70000));
+        salary.setBonus(5000.0);
+        salary.setBasic(70000.0);
         when(salaryRepository.save(any(Salary.class))).thenReturn(salary);
 
         Salary updateUserSalary=salaryRepository.save(salary);
@@ -74,16 +71,16 @@ class SalaryServiceImplTest {
         assertNotNull(salary);
         assertNotEquals(newSalary().getBonus(),updateUserSalary.getBonus());
         assertNotEquals(newSalary().getBasic(),updateUserSalary.getBasic());
-        assertEquals(salary.isAvailability(),updateUserSalary.isAvailability());
+        assertEquals(salary.getAvailability(),updateUserSalary.getAvailability());
 
     }
     private static Salary newSalary(){
         Salary salary=new Salary();
-        salary.setBasic(BigDecimal.valueOf(50000));
-        salary.setBonus(BigDecimal.valueOf(0));
+        salary.setBasic(50000.0);
+        salary.setBonus(0.0);
         salary.setAvailability(true);
         salary.setDegree("Pilot");
-        salary.setPenalties(BigDecimal.valueOf(0));
+        salary.setPenalties(0.0);
         salary.setCreatedAt(new Date());
         salary.setUpdatedAt(new Date());
         return salary;
