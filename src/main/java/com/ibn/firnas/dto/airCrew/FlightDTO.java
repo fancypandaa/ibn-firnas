@@ -8,10 +8,11 @@ import com.ibn.firnas.utils.enums.TripType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
-
+@Builder
 public record FlightDTO(
         @JsonInclude(value = JsonInclude.Include.NON_NULL)
         Long flightId,

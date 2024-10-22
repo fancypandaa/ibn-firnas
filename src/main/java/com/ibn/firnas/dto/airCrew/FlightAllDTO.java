@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ibn.firnas.utils.enums.TripCategory;
 import com.ibn.firnas.utils.enums.TripType;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -12,7 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-
+@Builder
 public record FlightAllDTO(
         @JsonInclude(value = JsonInclude.Include.NON_NULL)
         Long flightId,
