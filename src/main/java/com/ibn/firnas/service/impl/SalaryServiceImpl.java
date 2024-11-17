@@ -8,12 +8,14 @@ import com.ibn.firnas.exception.CustomNotFoundException;
 import com.ibn.firnas.repostiories.SalaryRepository;
 import com.ibn.firnas.repostiories.UserDetailsRepository;
 import com.ibn.firnas.service.SalaryService;
+import com.ibn.firnas.specifications.SalarySpecification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -64,4 +66,30 @@ public class SalaryServiceImpl implements SalaryService {
         return salaryMapper.
                 salarytoSalaryDTO(salaryRepository.save(newSalary));
     }
+
+    @Override
+    public List<SalaryDTO> findAllBasicSalaryBetween(Double min, Double max) {
+        List<Salary> salaries =salaryRepository.findAll(SalarySpecification.basicAreBetween(min,max));
+        return salaryMapper.salariesToSalaryDTOs(salaries);
+    }
+
+    @Override
+    public List<SalaryDTO> findAllPenaltiesGreaterThan(Double penalty) {
+        List<Salary> salaryList = salaryRepository.
+                findAll(SalarySpecification.penaltiesGreaterThan(penalty));
+        return salaryMapper.salariesToSalaryDTOs(salaryList);
+    }
+
+    @Override
+    public List<SalaryDTO> findAllBonusGreaterThan(Double bonus) {
+        List<Salary> salaryList = salaryRepository.findAll(SalarySpecification.bonusGreaterThan(bonus));
+        return salaryMapper.salariesToSalaryDTOs(salaryList);
+    }
+
+    @Override
+    public List<SalaryDTO> findAllBonusLessThan(Double bonus) {
+        List<Salary> salaryList = salaryRepository.findAll(SalarySpecification.bonusLessThan(bonus));
+        return salaryMapper.salariesToSalaryDTOs(salaryList);
+    }
+
 }
