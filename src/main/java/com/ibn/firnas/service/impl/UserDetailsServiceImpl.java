@@ -9,11 +9,13 @@ import com.ibn.firnas.exception.CustomNotFoundException;
 import com.ibn.firnas.repostiories.UserDetailsRepository;
 import com.ibn.firnas.repostiories.UserRepository;
 import com.ibn.firnas.service.UserDetailsService;
+import com.ibn.firnas.specifications.UserDetailsSpecification;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -61,5 +63,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         updatedUserDetails.setUserId(optionalUser.get().getUserId());
         return userDetailsMapper.
                 userDetailsToUserDetailsDTO(userDetailsRepository.save(updatedUserDetails));
+    }
+
+    @Override
+    public List<UserDetailsDTO> findAllNamesLike(Optional<String> optionalFirstName, Optional<String> optionalLastName) {
+        String firstName = optionalFirstName.isPresent()? optionalFirstName.get() :  "";
+        String lastName = optionalLastName.isPresent()? optionalFirstName.get() : "";
+        List<UserDetails> userDetails = userDetailsRepository.
+                findAll(UserDetailsSpecification.nameLike(firstName,lastName));
+        return userDetailsMapper.usersDetailToUserDetailDTOs(userDetails);
     }
 }
