@@ -5,7 +5,7 @@ import com.ibn.firnas.domain.Flight;
 import com.ibn.firnas.dto.airCrew.AirPlaneDTO;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
-import java.util.Set;
+import java.util.*;
 @Mapper(componentModel = "spring")
 public interface AirPlaneMapper {
     @Named("exportLastFlight")
@@ -18,4 +18,5 @@ public interface AirPlaneMapper {
     AirPlaneDTO airPlaneToAirPlaneDTO(AirPlane airPlane);
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateAirPlaneFromDTO(AirPlaneDTO airPlaneDTO, @MappingTarget AirPlane airPlane);
+    List<AirPlaneDTO> airPlanesToAirPlaneDTOs(List<AirPlane> airPlanes);
 }

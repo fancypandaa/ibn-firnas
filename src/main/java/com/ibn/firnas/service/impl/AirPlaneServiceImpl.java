@@ -8,7 +8,11 @@ import com.ibn.firnas.exception.CustomNotFoundException;
 import com.ibn.firnas.repostiories.AirPlaneRepository;
 import com.ibn.firnas.repostiories.FlightRepository;
 import com.ibn.firnas.service.AirPlaneService;
+import com.ibn.firnas.specifications.AirPlaneSpecification;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 @Service
 public class AirPlaneServiceImpl implements AirPlaneService {
@@ -49,7 +53,7 @@ public class AirPlaneServiceImpl implements AirPlaneService {
     }
 
     @Override
-    public AirPlane assignFlightToAirPlane(Long airPlaneId, Long flightId){
+    public AirPlaneDTO assignFlightToAirPlane(Long airPlaneId, Long flightId){
         Optional<AirPlane> optionalAirPlane=airPlaneRepository.findById(airPlaneId);
         if(!optionalAirPlane.isPresent()){
             throw new CustomNotFoundException("AirPlane with "+airPlaneId +" Not found");
@@ -60,7 +64,13 @@ public class AirPlaneServiceImpl implements AirPlaneService {
         }
         AirPlane airPlane= optionalAirPlane.get();
         airPlane.addFlights(optionalFlight.get());
-        return airPlaneRepository.save(airPlane);
+        AirPlaneDTO airPlaneDTO = airPlaneMapper.airPlaneToAirPlaneDTO(airPlaneRepository.save(airPlane));
+        return airPlaneDTO;
     }
 
+    @Override
+    public List<AirPlaneDTO> findAllAirPlanesWithLastCheckTankBetween(Date from, Date to) {
+        List<AirPlane> airPlaneList= airPlaneRepository.findAll(AirPlaneSpecification.dateBetween(from,to));
+        return airPlaneMapper.airPlanesToAirPlaneDTOs(airPlaneList);
+    }
 }
