@@ -24,5 +24,6 @@ public interface UserDetailsMapper {
     @Mapping(source = "locations" ,target = "locationId",qualifiedByName = "extractCurrentLocationId")
     UserDetailsDTO userDetailsToUserDetailsDTO(UserDetails userDetails);
     UserDetails userDetailsDTOtoUserDetails(UserDetailsDTO userDetailsDTO);
+    List<UserDetailsDTO> usersDetailToUserDetailDTOs(List<UserDetails> userDetails);
 }
 
