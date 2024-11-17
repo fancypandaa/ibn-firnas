@@ -1,6 +1,5 @@
 package com.ibn.firnas.controller;
 
-import com.ibn.firnas.domain.AirPlane;
 import com.ibn.firnas.dto.airCrew.AirPlaneDTO;
 import com.ibn.firnas.service.AirPlaneService;
 import org.slf4j.Logger;
@@ -13,27 +12,27 @@ import java.util.*;
 @RequestMapping(AirPlaneController.AIRPLANE_URI)
 public class AirPlaneController {
     private static Logger log = LoggerFactory.getLogger(FlightController.class);
-    public static final String AIRPLANE_URI="/api/aircrew/plane";
+    public static final String AIRPLANE_URI="/api/aircrew";
     private final AirPlaneService airPlaneService;
     public AirPlaneController(AirPlaneService airPlaneService) {
         this.airPlaneService = airPlaneService;
     }
-    @GetMapping("/{planeId}")
+    @GetMapping("/plane/{planeId}")
     public ResponseEntity<?> getAirPlaneById(@PathVariable Long planeId){
         AirPlaneDTO airPlaneDTO= airPlaneService.findAirPlaneById(planeId);
         return new ResponseEntity<>(airPlaneDTO, HttpStatus.OK);
     }
-    @PostMapping
+    @PostMapping("/plane")
     public ResponseEntity<?> createNewAirPlane(@RequestBody AirPlaneDTO airPlaneDTO){
         AirPlaneDTO savedAirPlane = airPlaneService.addNewAirPlane(airPlaneDTO);
         return new ResponseEntity<>(savedAirPlane,HttpStatus.CREATED);
     }
-    @PatchMapping("/{planeId}")
+    @PatchMapping("/plane/{planeId}")
     public ResponseEntity<?> updateAirPlane(@PathVariable Long planeId,@RequestBody AirPlaneDTO airPlaneDTO){
         AirPlaneDTO updatedAirPlane = airPlaneService.updateAirPlaneInfo(planeId,airPlaneDTO);
         return new ResponseEntity<>(updatedAirPlane,HttpStatus.OK);
     }
-    @PostMapping("/{airplaneId}/{flightId}")
+    @PostMapping("/plane/{airplaneId}/{flightId}")
     public ResponseEntity<?> addFlightToAirPlane(@PathVariable Long airplaneId,@PathVariable Long flightId){
         AirPlaneDTO savedAirPlane = airPlaneService.assignFlightToAirPlane(airplaneId,flightId);
         return new ResponseEntity<>(savedAirPlane,HttpStatus.CREATED);
