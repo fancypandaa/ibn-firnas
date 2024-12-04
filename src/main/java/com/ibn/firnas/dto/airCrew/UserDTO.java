@@ -4,7 +4,7 @@ import jakarta.validation.constraints.*;
 import java.util.Date;
 public record UserDTO(Long userId,
                       @NotBlank(message = "User name cannot be null")
-                      String userName,
+                      String username,
                       String email,
                       @Size(min = 10,max = 30, message = "password should be 8 up to 30 characters")
                       String password,
