@@ -2,7 +2,7 @@ spring:
   server:
     max-http-header-size: 20000
   datasource:
-    url: jdbc:mysql://172.27.0.3:3306/flights
+    url: jdbc:mysql://172.27.0.2:3306/flights
     username: root
     password: rootpassword
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -20,3 +20,7 @@ server:
 
 keys:
   ati_api_key: b7c4853abe70fe0b85fb700b1abcc8a1d00bf0af142bfe0a19c0bb547e7c1c27
+
+rsa:
+  private-key: classpath:certs/private-key.pem
+  public-key: classpath:certs/public-key.pem
