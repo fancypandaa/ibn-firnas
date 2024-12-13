@@ -93,7 +93,7 @@ class UserDetailsServiceImplTest {
     private static User savedUser(){
         User user = new User();
         user.setUserId(1L);
-        user.setUserName("LOL");
+        user.setUsername("LOL");
         user.setEmail("user@mail.com");
         user.setPassword("88888888Abc");
         return user;

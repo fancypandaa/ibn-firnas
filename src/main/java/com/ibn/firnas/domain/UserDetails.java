@@ -11,7 +11,7 @@ import java.util.*;
 @Entity
 @Getter
 @Setter
-public class UserDetails {
+public class UserDetails{
     @Id
     private Long userId;
     private String firstName;
