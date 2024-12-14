@@ -1,7 +1,10 @@
 package com.ibn.firnas;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ibn.firnas.configuration.RsaKeyConfigProperties;
+import com.ibn.firnas.domain.User;
 import com.ibn.firnas.dto.googleFlights.AllFlights;
+import com.ibn.firnas.repostiories.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,11 +13,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +30,7 @@ import java.util.stream.Collectors;
 
 @SpringBootApplication
 @ServletComponentScan
+@EnableConfigurationProperties(RsaKeyConfigProperties.class)
 public class FirnasApplication {
 	private static final Logger log = LoggerFactory.getLogger(FirnasApplication.class);
 	public static void main(String[] args) {
@@ -54,4 +60,6 @@ public class FirnasApplication {
 		return new JSONObject(content);
 	}
 */
+
+
 }
