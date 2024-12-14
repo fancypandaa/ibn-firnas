@@ -4,7 +4,7 @@ pipeline {
     stages {
        stage('Checkout') {
           steps {
-                git 'https://github.com/fancypandaa/ibn-firnas'
+                git clone 'https://github.com/fancypandaa/ibn-firnas'
 	   }
 	}
 
