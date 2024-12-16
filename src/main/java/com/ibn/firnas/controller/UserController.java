@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     public static final String USER_URI="/api/aircrew/user";
     private final UserService userService;
-    private final ErrorMapper errorMapper;
-    public UserController(UserService userService, ErrorMapper errorMapper) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.errorMapper = errorMapper;
     }
     @PostMapping
     public ResponseEntity<? super UserDTO> createNewUser(@RequestBody UserDTO user){
@@ -27,7 +25,7 @@ public class UserController {
             return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
         }
         catch (Exception ex){
-            return new ResponseEntity<>(errorMapper.createErrorMap(ex),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(ex,HttpStatus.BAD_REQUEST);
         }
     }
 

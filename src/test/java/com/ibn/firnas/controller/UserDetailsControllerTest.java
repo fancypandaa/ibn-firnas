@@ -59,7 +59,6 @@ class UserDetailsControllerTest {
                 .content(objectMapper.writeValueAsString(userDetails()))
         ).andExpect(status().isCreated())
                 .andDo(print());
-
     }
 
 
